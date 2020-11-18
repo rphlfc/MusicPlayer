@@ -8,8 +8,8 @@ Mais um [layout do Dribbble](https://dribbble.com/shots/14573542-Music-Player-Da
 
 ## Vídeos
 - [Vídeo no YouTube 1/3](https://youtu.be/qXUE-ZFjj0M)
-- Vídeo no YouTube 2/3 - Breve
-- Vídeo no YouTube 3/3 - Breve
+- [Vídeo no YouTube 2/3](https://youtu.be/dHQmiw_3yH0)
+- Vídeo no YouTube 3/3 - 19/11
  
 ## Requisitos
 - iOS 14
