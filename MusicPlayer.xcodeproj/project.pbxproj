@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		648BBA2C25672FA800537697 /* kingslayer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 648BBA2B25672FA700537697 /* kingslayer.mp3 */; };
 		64EAF3EC25640FBA000C410B /* MusicPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EAF3EB25640FBA000C410B /* MusicPlayerApp.swift */; };
 		64EAF3EE25640FBA000C410B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EAF3ED25640FBA000C410B /* ContentView.swift */; };
 		64EAF3F025640FBD000C410B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64EAF3EF25640FBD000C410B /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		648BBA2B25672FA700537697 /* kingslayer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kingslayer.mp3; sourceTree = "<group>"; };
 		64EAF3E825640FBA000C410B /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64EAF3EB25640FBA000C410B /* MusicPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerApp.swift; sourceTree = "<group>"; };
 		64EAF3ED25640FBA000C410B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -39,6 +41,7 @@
 			isa = PBXGroup;
 			children = (
 				64EAF3FB2564978B000C410B /* README.md */,
+				648BBA2B25672FA700537697 /* kingslayer.mp3 */,
 				64EAF3EA25640FBA000C410B /* MusicPlayer */,
 				64EAF3E925640FBA000C410B /* Products */,
 			);
@@ -129,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				648BBA2C25672FA800537697 /* kingslayer.mp3 in Resources */,
 				64EAF3FC2564978B000C410B /* README.md in Resources */,
 				64EAF3F325640FBD000C410B /* Preview Assets.xcassets in Resources */,
 				64EAF3F025640FBD000C410B /* Assets.xcassets in Resources */,

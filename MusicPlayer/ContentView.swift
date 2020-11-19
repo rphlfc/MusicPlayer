@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct ContentView: View {
     var body: some View {
@@ -13,14 +14,23 @@ struct ContentView: View {
     }
 }
 
+let url = URL(fileURLWithPath: Bundle.main.path(forResource: "kingslayer", ofType: "mp3")!)
+
 struct PlayerView: View {
     @State var isPlaying = false
     @State var liked = false
     @State var isRepeatOn = false
     @State var isShuffleOn = false
-    @State var progress: CGFloat = 0
     
     @State var offset: CGFloat = 0
+    
+    @State var artist = ""
+    @State var title = ""
+    @State var song = ""
+    @State var artwork: UIImage = UIImage(named: "cover")!
+    
+    var player = try! AVAudioPlayer(contentsOf: url)
+    @State var timer = Timer.publish(every: 0.5, on: .current, in: .default).autoconnect()
     
     var body: some View {
         ZStack {
@@ -45,16 +55,16 @@ struct PlayerView: View {
                 }
                 .padding(.top)
                 
-                Text("Bring Me The Horizon")
+                Text(artist)
                     .font(.system(size: 19))
                     .foregroundColor(.gray)
                     .padding(.top)
                 
-                Text("Kingslayer (feat. BABYMETAL)")
+                Text(title)
                     .font(.system(size: 25, weight: .semibold))
                     .padding(.top, 8)
                 
-                Image("cover")
+                Image(uiImage: artwork)
                     .resizable()
                     .scaledToFit()
                     .cornerRadius(20)
@@ -79,10 +89,15 @@ struct PlayerView: View {
                                         if value.location.x <= 0 {
                                             offset = 0
                                         } else if value.location.x > geometry.size.width {
-                                            offset = geometry.size.width - 15
+                                            offset = geometry.size.width - 8
                                         } else {
                                             offset = value.location.x
                                         }
+                                        
+                                        let progress = offset / geometry.size.width
+                                        let time = TimeInterval(progress) * player.duration
+                                        player.currentTime = time
+                                        player.play()
                                     })
                             )
                     }
@@ -91,13 +106,13 @@ struct PlayerView: View {
                 .frame(height: 32)
                 
                 HStack {
-                    Text("1:26")
+                    Text(getCurrentTime(value: player.currentTime))
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                     
                     Spacer()
                     
-                    Text("3:40")
+                    Text(getCurrentTime(value: player.duration))
                         .font(.system(size: 15))
                         .foregroundColor(.gray)
                 }
@@ -117,7 +132,12 @@ struct PlayerView: View {
                         })
                         
                         Button(action: {
-                            isPlaying.toggle()
+                            if player.isPlaying {
+                                player.pause()
+                            } else {
+                                player.play()
+                            }
+                            isPlaying = player.isPlaying
                         }, label: {
                             Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                                 .font(.system(size: 40))
@@ -170,6 +190,35 @@ struct PlayerView: View {
             }
             .padding(.horizontal)
         }
+        .onAppear() {
+            let asset = AVAsset(url: player.url!)
+            asset.metadata.forEach { (meta) in
+                switch (meta.commonKey?.rawValue) {
+                case "title": title = meta.value as? String ?? ""
+                case "artist": artist = meta.value as? String ?? ""
+                case "artwork": if meta.value != nil { artwork = UIImage(data: meta.value as! Data)! }
+                default: ()
+                }
+            }
+        }
+        .onReceive(timer) { (_) in
+            updateTimer()
+        }
+    }
+    
+    func getCurrentTime(value: TimeInterval) -> String {
+        return "\(Int(value / 60)):\(Int(value.truncatingRemainder(dividingBy: 60)) <= 9 ? "0" : "")\(Int(value.truncatingRemainder(dividingBy: 60)))"
+    }
+    
+    func updateTimer() {
+        let currentTime = player.currentTime
+        let total = player.duration
+        let progress = currentTime / total
+        
+        withAnimation(.linear(duration: 0.1)) {
+            self.offset = CGFloat(progress) * (UIScreen.main.bounds.width - 30)
+        }
+        isPlaying = player.isPlaying
     }
 }
 
